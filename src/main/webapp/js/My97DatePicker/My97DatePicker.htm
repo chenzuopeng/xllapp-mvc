@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/xml; charset=utf-8" />
+<title>My97DatePicker</title>
+<script type="text/javascript" src="config.js"></script>
+<script>
+if(parent==window)
+	location.href = 'http://www.my97.net/';
+
+var $d, $dp, $pdp = parent.$dp, $dt, $tdt, $sdt, $lastInput, $IE=$pdp.ie, $FF = $pdp.ff,$OPERA=$pdp.opera, $ny, $cMark = false;
+
+if ($pdp.eCont) {
+	$dp = {};
+	for (var p in $pdp) {
+		$dp[p] = $pdp[p];
+	}
+}
+else
+	$dp = $pdp;
+$dp.realLang = getCurr(langList, $dp.lang);
+document.write("<script src='lang/" + $dp.realLang.name + ".js' charset='" + $dp.realLang.charset + "'><\/script>");
+for (var i = 0; i < skinList.length; i++) {
+    document.write('<link rel="stylesheet" type="text/css" href="skin/' + skinList[i].name + '/datepicker.css" title="' + skinList[i].name + '" charset="' + skinList[i].charset + '" disabled="true"/>');
+}
+function getCurr(arr, name){
+	var isFound = false;
+	var item = arr[0];
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i].name == name) {
+			item = arr[i];
+			break;
+		}
+	}
+	return item;
+}
+/**
+ * 将后退键屏蔽
+ */
+if (window.navigator.userAgent.indexOf("MSIE")>=1)
+{
+    document.onkeydown = checkKey;
+} else if (window.navigator.userAgent.indexOf("Firefox")>=1){
+    document.onkeypress = checkKey;
+}
+
+
+	
+
+
+
+/**
+ * 实现方法
+ */
+function checkKey(e){
+    var code;
+    if (!e) var e = window.event;
+    if (e.keyCode) code = e.keyCode;
+    else if (e.which) code = e.which;
+	if (code == 8)//backspace code
+	{   
+		var typeName= document.activeElement.type;
+		if (typeName == undefined) {
+			typeName = 'typeName';
+		}
+		//只读的屏蔽掉
+		if (document.activeElement.readOnly) {
+			code = 0;
+			return false;
+		}
+		//对文本框和文本域除外
+		if(typeName.toLowerCase() !=  'text' && typeName.toLowerCase() !=  'textarea') {
+		    code = 0;
+		    //window.alert('backspace');
+		    return false;
+		}
+	}
+	return true;
+}
+</script>
+<script type="text/javascript" src="calendar.js"></script>
+</head>
+<body leftmargin="0" topmargin="0" onload="$c.autoSize()">
+</body>
+</html>
+<script>new My97DP();</script>
